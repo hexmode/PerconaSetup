@@ -1,0 +1,9 @@
+/*.tex
+/*.odt
+/*.docx
+/*.zip
+/*.tar
+/*.tgz
+/composer.lock
+PHPTAGS.sqlite
+/vendor

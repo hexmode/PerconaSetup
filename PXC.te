@@ -1,0 +1,31 @@
+module PXC 1.0;
+require {
+        type anon_inodefs_t;
+        type kernel_t;
+        type mysqld_safe_t;
+        type mysqld_t;
+        type port_t;
+        type proc_net_t;
+        type sysctl_net_t;
+        type tmp_t;
+#	type unconfined_service_t;
+        type unconfined_t;
+        class dir search;
+        class file { getattr open read write ioctl };
+        class process { getattr setpgid };
+        class system module_request;
+        class tcp_socket { name_bind name_connect };
+        class unix_stream_socket connectto;
+}
+#============= mysqld_t ==============
+allow mysqld_t anon_inodefs_t:file write;
+allow mysqld_t kernel_t:system module_request;
+allow mysqld_t port_t:tcp_socket name_bind;
+allow mysqld_t port_t:tcp_socket name_connect;
+allow mysqld_t proc_net_t:file read;
+allow mysqld_t proc_net_t:file { getattr open ioctl };
+allow mysqld_t self:process { getattr setpgid };
+allow mysqld_t self:unix_stream_socket connectto;
+allow mysqld_t sysctl_net_t:dir search;
+allow mysqld_t sysctl_net_t:file { getattr open read };
+allow mysqld_t tmp_t:file write;

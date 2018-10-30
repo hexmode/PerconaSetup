@@ -1,0 +1,38 @@
+[mysqld]
+# Path to Galera library
+wsrep_provider=/usr/lib64/libgalera_smm.so
+
+# In order for Galera to work correctly binlog format should be ROW
+binlog_format=ROW
+
+# MyISAM storage engine has only experimental support
+default_storage_engine=InnoDB
+
+# This InnoDB autoincrement locking mode is a requirement for Galera
+innodb_autoinc_lock_mode=2
+
+# SST method
+wsrep_sst_method=xtrabackup-v2
+
+# Cluster name
+wsrep_cluster_name=pxc-cluster
+
+# Authentication for SST method
+wsrep_sst_auth="SSTUSER:SSTSECRET"
+
+# Slave thread to use
+wsrep_slave_threads=8
+
+wsrep_log_conflicts
+
+#pxc_strict_mode allowed values: DISABLED,PERMISSIVE,ENFORCING,MASTER
+pxc_strict_mode=ENFORCING
+
+# Cluster connection URL contains the IPs of node#1 & node#2
+wsrep_cluster_address=gcomm://NODE_LIST
+
+# This node's address
+wsrep_node_address=THIS_NODE
+
+# Log bin
+log_bin=NODE_NAME-bin
