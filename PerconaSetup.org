@@ -221,7 +221,17 @@ Note that if you just cut-n-paste all the above you will end up with a password 
   ) | mysql -u root -p"$NEWPW"
 #+END_SRC
 
-12) [@12] Verify that cluster software is running:
+12) [@12] Set up the =clustercheck= user.  The password for this user is hardcoded into =/usr/bin/clustercheck=
+#+BEGIN_SRC sh :shebang #!/bin/bash :tangle update-db-users.sh
+  (
+  cat<<EOF
+    GRANT PROCESS ON *.* TO 'clustercheckuser'@'localhost' identified by 'clustercheckpassword!';
+    FLUSH PRIVILEGES;
+  EOF
+  ) | mysql -u root -p"$NEWPW"
+#+END_SRC
+
+13) [@13] Verify that cluster software is running:
 #+BEGIN_SRC sh :shebang #!/bin/bash :tangle check-db-status.sh
   getWsrep() {
       arg=$1
